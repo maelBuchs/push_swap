@@ -6,18 +6,26 @@
 # include <unistd.h>
 # include "Libft/libft.h"
 
+
+typedef struct s_node
+{
+	long long		content;
+	int				rank;
+	struct s_node	*next;
+	struct s_node	*previous;
+}	t_node;
+
 typedef struct s_stack
 {
-	int		value;
-	t_stack	*next;
-	t_stack	*previous;
+	int			range;
+	int			median;
+	t_node		*selected;
+	t_node		*top;
+	t_node		*bottom;
 }	t_stack;
 
-typedef struct s_data
-{
-	t_stack	*top_stack_a;
-	t_stack	*top_stack_b;
-	int		op_count;
-}	t_data;
+void	add_node(t_stack *stack, long long value);
+void	init_stack(t_stack *stack);
+void	print_stack(t_stack *stack);
 
 #endif

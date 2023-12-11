@@ -15,6 +15,11 @@
 void	sa(t_data *data, int vers)
 /* switch a[0] et a[1] */
 {
+	t_stack *temp;
+
+	temp = data->top_stack_a-;
+	data->top_stack_a = top_stack_a->next;
+	top_stack_a->next = temp;
 	if (!vers)
 		ft_putstr_fd("sa\n", 1);
 }
