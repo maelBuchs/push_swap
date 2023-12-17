@@ -49,6 +49,7 @@ void	print_stack(t_stack *stack)
 	int	i;
 
 	i = 0;
+
 	stack->selected = stack->bottom;
 	while (i < stack->range - 1)
 	{
@@ -59,23 +60,37 @@ void	print_stack(t_stack *stack)
 	}
 }
 
-int main(void)
+void tab_to_stack(char **tab, t_stack *stack)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (atoi(tab[i]) != 0 || (atoi(tab[i]) == 0 && tab[i][0] == '0'))
+			add_node(stack, (long long) atoi(tab[i]));
+		i++;
+	}
+}
+
+int main(int argc, char *argv[])
 {
 	t_stack stack_a;
 	t_stack stack_b;
-
+	char **tab;
+	if (argc < 2)
+		return 0;
 	init_stack(&stack_a);
-	add_node(&stack_a, 8);
-	add_node(&stack_a, 1);
-	add_node(&stack_a, 2);
-	add_node(&stack_a, 3);
-	add_node(&stack_a, 4);
-	add_node(&stack_a, 5);
-	add_node(&stack_a, 6);
-	add_node(&stack_a, 7);
-	add_node(&stack_a, 8);
 	init_stack(&stack_b);
+	if (argc == 2)
+	{
+		tab = ft_split(argv[1], ' ');
+		tab_to_stack(tab, &stack_a);
+	}
+	if (argc > 2)
+		tab_to_stack(argv, &stack_a);
 	print_stack(&stack_a);
 	print_stack(&stack_b);
 	return (0);
 }
+
