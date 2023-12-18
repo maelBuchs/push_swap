@@ -6,6 +6,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -rf
 HEAD = push_swap.h
 SRCS = 	main.c\
+		instructions.c\
 
 
 OBJS = $(SRCS:.c=.o)

@@ -51,7 +51,7 @@ void	print_stack(t_stack *stack)
 	i = 0;
 
 	stack->selected = stack->bottom;
-	while (i < stack->range - 1)
+	while (i < stack->range)
 	{
 		stack->selected = stack->selected->next;
 		ft_putnbr_fd(stack->selected->content, 1);
@@ -60,6 +60,12 @@ void	print_stack(t_stack *stack)
 	}
 }
 
+void	print_error(int error)
+{
+	if (error == 0)
+		ft_putstr_fd("Error\nwrong input\n", 1);
+	exit (0);
+}
 void tab_to_stack(char **tab, t_stack *stack)
 {
 	int	i;
@@ -67,8 +73,9 @@ void tab_to_stack(char **tab, t_stack *stack)
 	i = 0;
 	while (tab[i])
 	{
-		if (atoi(tab[i]) != 0 || (atoi(tab[i]) == 0 && tab[i][0] == '0'))
-			add_node(stack, (long long) atoi(tab[i]));
+		if (atoi(tab[i]) == 0 && tab[i][0] != '0')
+			print_error(0);
+		add_node(stack, (long long) atoi(tab[i]));
 		i++;
 	}
 }
@@ -88,7 +95,10 @@ int main(int argc, char *argv[])
 		tab_to_stack(tab, &stack_a);
 	}
 	if (argc > 2)
-		tab_to_stack(argv, &stack_a);
+	{
+		tab = &argv[1];
+		tab_to_stack(tab, &stack_a);
+	}
 	print_stack(&stack_a);
 	print_stack(&stack_b);
 	return (0);
