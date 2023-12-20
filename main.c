@@ -27,7 +27,7 @@ void	add_node(t_stack *stack, long long value)
 	if(stack->range == 0)
 	{
 		node->next = node;
-		node->previous = stack->bottom;
+		node->previous = node;
 		stack->top = node;
 		stack->bottom = node;
 		node->content = value;
@@ -42,6 +42,21 @@ void	add_node(t_stack *stack, long long value)
 	node->content = value;
 	stack->bottom->next = stack->top;
 	stack->range += 1;
+}
+
+void	remove_node(t_stack *stack, t_node *node)
+{
+	if(stack->range > 1)
+	{
+		node->previous->next = node->next;
+		node->next->previous = node->previous;
+		if (stack->top == node)
+			stack->top = node->next;
+		if (stack->bottom == node)
+			stack->bottom = node->previous;
+	}
+	stack->range -= 1;
+	free(node);
 }
 
 void	print_stack(t_stack *stack)
@@ -66,6 +81,7 @@ void	print_error(int error)
 		ft_putstr_fd("Error\nwrong input\n", 1);
 	exit (0);
 }
+
 void tab_to_stack(char **tab, t_stack *stack)
 {
 	int	i;
@@ -99,7 +115,10 @@ int main(int argc, char *argv[])
 		tab = &argv[1];
 		tab_to_stack(tab, &stack_a);
 	}
+	ra(&stack_a);
+	printf("stack A :\n");
 	print_stack(&stack_a);
+	printf("stack B :\n");
 	print_stack(&stack_b);
 	return (0);
 }
