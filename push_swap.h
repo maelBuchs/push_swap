@@ -6,22 +6,13 @@
 # include <unistd.h>
 # include "Libft/libft.h"
 
-
-typedef struct s_node
-{
-	long long		content;
-	int				rank;
-	struct s_node	*next;
-	struct s_node	*previous;
-}	t_node;
-
 typedef struct s_stack
 {
 	int			range;
 	int			median;
-	t_node		*selected;
-	t_node		*top;
-	t_node		*bottom;
+	t_list		*selected;
+	t_list		*top;
+	t_list		*bottom;
 }	t_stack;
 
 /* Instructions */
@@ -43,8 +34,9 @@ void	rotate(t_stack *stack);
 void	tab_to_stack(char **tab, t_stack *stack);
 void	print_error(int error);
 void	print_stack(t_stack *stack);
-void	add_node(t_stack *stack, long long value);
+void	add_top(t_stack *stack, long long value);
+void	add_bottom(t_stack *stack, long long value);
 void	init_stack(t_stack *stack);
-void	remove_node(t_stack *stack, t_node *node);
+void	remove_node(t_stack *stack, t_list *node);
 
 #endif

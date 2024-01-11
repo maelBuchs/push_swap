@@ -19,58 +19,17 @@ void	init_stack(t_stack *stack)
 	stack->bottom = NULL;
 }
 
-void	add_node(t_stack *stack, long long value)
-{
-	t_node *node;
-
-	node = malloc(sizeof(t_node));
-	if(stack->range == 0)
-	{
-		node->next = node;
-		node->previous = node;
-		stack->top = node;
-		stack->bottom = node;
-		node->content = value;
-		stack->bottom->next = node;
-		stack->range += 1;
-		return ;
-	}
-	node->next = stack->top;
-	node->previous = stack->bottom;
-	stack->top = node;
-	node = stack->top;
-	node->content = value;
-	stack->bottom->next = stack->top;
-	stack->range += 1;
-}
-
-void	remove_node(t_stack *stack, t_node *node)
-{
-	if(stack->range > 1)
-	{
-		node->previous->next = node->next;
-		node->next->previous = node->previous;
-		if (stack->top == node)
-			stack->top = node->next;
-		if (stack->bottom == node)
-			stack->bottom = node->previous;
-	}
-	stack->range -= 1;
-	free(node);
-}
-
 void	print_stack(t_stack *stack)
 {
-	int	i;
+	int i;
 
 	i = 0;
-
-	stack->selected = stack->bottom;
-	while (i < stack->range)
+	stack->selected = stack->top;
+	while (i < ft_lstsize(stack->top))
 	{
-		stack->selected = stack->selected->next;
 		ft_putnbr_fd(stack->selected->content, 1);
 		ft_putchar_fd('\n', 1);
+		stack->selected = stack->selected->next;
 		i++;
 	}
 }
@@ -85,15 +44,39 @@ void	print_error(int error)
 void tab_to_stack(char **tab, t_stack *stack)
 {
 	int	i;
-
+	int content;
 	i = 0;
 	while (tab[i])
 	{
-		if (atoi(tab[i]) == 0 && tab[i][0] != '0')
+		if (ft_atoi(tab[i]) == 0 && tab[i][0] != '0')
 			print_error(0);
-		add_node(stack, (long long) atoi(tab[i]));
+		content = ft_atoi(tab[i]);
+		ft_lstadd_back(&stack->top, ft_lstnew(content));
 		i++;
 	}
+}
+
+int delnode(t_stack *stack, t_list *node)
+{
+	int i;
+	int content;
+	
+	stack->selected = stack->top;
+	i = 0;
+	while (ft_lstsize(stack->top) > i && node != stack->selected)
+	{
+		stack->selected = stack->selected->next; 
+		i++;
+	}
+	content = stack->selected->content;
+	if (i == 1)
+	{
+		free(stack->selected);
+		return (content);
+	}
+	if (i >= ft_lstsize(stack->top))
+		return (-1);
+	stack->
 }
 
 int main(int argc, char *argv[])
@@ -115,7 +98,7 @@ int main(int argc, char *argv[])
 		tab = &argv[1];
 		tab_to_stack(tab, &stack_a);
 	}
-	ra(&stack_a);
+	pa(&stack_a, &stack_b);
 	printf("stack A :\n");
 	print_stack(&stack_a);
 	printf("stack B :\n");
