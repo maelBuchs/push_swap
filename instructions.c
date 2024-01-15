@@ -49,22 +49,20 @@ void	pa(t_stack *stack_a, t_stack *stack_b)
 {
 	int temp;
 
-	temp = stack_b->top->content;
-	ft_lstdelone(stack_b->top, &stack_b->top);
-	add_top(stack_a, temp);
+	temp = delnode(stack_b, stack_b->top);
+	ft_lstadd_front(&stack_a->top, ft_lstnew(temp));
 	ft_putstr_fd("pa\n", 1);
 }
 
-// void	pb(t_stack *stack_a, t_stack *stack_b)
-// /* a[0] -> b[0] */
-// {
-// 	long long temp;
+void	pb(t_stack *stack_a, t_stack *stack_b)
+/* a[0] -> b[0] */
+{
+	int temp;
 
-// 	temp = stack_a->top->content;
-// 	remove_node(stack_a, stack_a->top);
-// 	add_top(stack_b, temp);
-// 	ft_putstr_fd("pb\n", 1);
-// }
+	temp = delnode(stack_a, stack_a->top);
+	ft_lstadd_front(&stack_b->top, ft_lstnew(temp));
+	ft_putstr_fd("pb\n", 1);
+}
 
 
 // void	rotate(t_stack *stack)

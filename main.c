@@ -16,7 +16,6 @@ void	init_stack(t_stack *stack)
 {
 	stack->range = 0;
 	stack->top = NULL;
-	stack->bottom = NULL;
 }
 
 void	print_stack(t_stack *stack)
@@ -60,23 +59,24 @@ int delnode(t_stack *stack, t_list *node)
 {
 	int i;
 	int content;
-	
+	t_list *previous;
+
 	stack->selected = stack->top;
 	i = 0;
-	while (ft_lstsize(stack->top) > i && node != stack->selected)
+	while (ft_lstsize(stack->top) > i && node != stack->selected->next &&  stack->selected->next->next)
 	{
+		content = stack->selected->content;
+		previous = stack->selected;
 		stack->selected = stack->selected->next; 
 		i++;
 	}
-	content = stack->selected->content;
 	if (i == 1)
 	{
 		free(stack->selected);
 		return (content);
 	}
-	if (i >= ft_lstsize(stack->top))
-		return (-1);
-	stack->
+	free(previous);
+	return (content);
 }
 
 int main(int argc, char *argv[])

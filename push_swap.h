@@ -12,7 +12,6 @@ typedef struct s_stack
 	int			median;
 	t_list		*selected;
 	t_list		*top;
-	t_list		*bottom;
 }	t_stack;
 
 /* Instructions */
@@ -38,5 +37,6 @@ void	add_top(t_stack *stack, long long value);
 void	add_bottom(t_stack *stack, long long value);
 void	init_stack(t_stack *stack);
 void	remove_node(t_stack *stack, t_list *node);
+int 	delnode(t_stack *stack, t_list *node);
 
 #endif
