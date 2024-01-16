@@ -65,55 +65,69 @@ void	pb(t_stack *stack_a, t_stack *stack_b)
 }
 
 
-// void	rotate(t_stack *stack)
-// {
-// 	long long temp;
+void	rotate(t_stack *stack)
+{
+	int i = 0;
+	int content;
 
-// 	temp = stack->bottom->content;
-// 	remove_node(stack, stack->bottom);
-// 	add_top(stack, temp);
-// }
+	stack->selected = stack->top;
+	while(i < ft_lstsize(stack->top) - 1)
+	{
+		stack->selected = stack->selected->next;
+		i++;
+	}
+	content = delnode(stack, stack->selected);
+	ft_lstadd_front(&stack->top, ft_lstnew(content));
+}
 
-// void	ra(t_stack *stack)
-// /* a[last] -> a[0] || a[0] -> a[1] */
-// {	
-// 	rotate(stack);
-// 	ft_putstr_fd("ra\n", 1);
-// }
+void	ra(t_stack *stack)
+/* a[last] -> a[0] || a[0] -> a[1] */
+{	
+	rotate(stack);
+	ft_putstr_fd("ra\n", 1);
+}
 
-// void	rb(t_stack *stack)
-// /* b[last] -> b[0] || b[0] -> b[1] */
-// {
-// 	rotate(stack);
-// 	ft_putstr_fd("rb\n", 1);
-// }
+void	rb(t_stack *stack)
+/* b[last] -> b[0] || b[0] -> b[1] */
+{
+	rotate(stack);
+	ft_putstr_fd("rb\n", 1);
+}
 
-// void	rr(t_stack *stack_a, t_stack *stack_b)
-// /* ra + rb */
-// {
-// 	rotate(stack_a);
-// 	rotate(stack_b);
-// 	ft_putstr_fd("rr\n", 1);
-// }
+void	rr(t_stack *stack_a, t_stack *stack_b)
+/* ra + rb */
+{
+	rotate(stack_a);
+	rotate(stack_b);
+	ft_putstr_fd("rr\n", 1);
+}
 
-// // void	rra(t_stack *stack, int vers)
-// // /* a[0] -> a[last] || a[1] -> a[0] */
-// // {
-// // 	if (!vers)
-// // 		ft_putstr_fd("rra\n", 1);
-// // }
+void	reverse_rotate(t_stack *stack)
+{
+	int content;
 
-// // void	rrb(t_stack *stack, int vers)
-// // /* b[0] -> b[last] || b[1] -> b[0] */
-// // {
-// // 	if (!vers)
-// // 		ft_putstr_fd("rrb\n", 1);
-// // }
+	content = delnode(stack, stack->top);
+	ft_lstadd_back(&stack->top, ft_lstnew(content));
+}
 
-// // void	rrr(t_stack *stack)
-// // /* rra + rrb */
-// // {
-// // 	rra(stack, 1);
-// // 	rrb(stack, 1);
-// // 	ft_putstr_fd("rrr\n", 1);
-// // }
+void	rra(t_stack *stack)
+/* a[0] -> a[last] || a[1] -> a[0] */
+{
+	reverse_rotate(stack);
+	ft_putstr_fd("rra\n", 1);
+}
+
+void	rrb(t_stack *stack)
+/* b[0] -> b[last] || b[1] -> b[0] */
+{
+	reverse_rotate(stack);
+	ft_putstr_fd("rrb\n", 1);
+}
+
+void	rrr(t_stack *stack_a, t_stack *stack_b)
+/* rra + rrb */
+{
+	reverse_rotate(stack_a);
+	reverse_rotate(stack_b);
+	ft_putstr_fd("rrr\n", 1);
+}
