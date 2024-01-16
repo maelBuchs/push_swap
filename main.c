@@ -94,6 +94,34 @@ int	is_sorted(t_stack *stack)
 	return (0);
 }
 
+int is_double(t_stack *stack)
+{
+	t_list *tmp;
+
+	stack->selected = stack->top;
+	while(stack->selected->next)
+	{
+		tmp = stack->selected->next;
+		while(tmp->next)
+		{
+			if(tmp->content == stack->selected->content)
+				return(1);
+			tmp = tmp->next;
+		}
+		stack->selected = stack->selected->next;
+	}
+	return (0);
+}
+
+int check_stack(t_stack *stack)
+{
+	if(is_double(stack))
+	{
+		ft_putstr_fd("Error\n", 2);
+		exit (0);
+	}
+}
+
 void get_index(t_stack *stack)
 {
 	int		i;
@@ -135,21 +163,22 @@ int	main(int argc, char *argv[])
 		tab = &argv[1];
 		tab_to_stack(tab, &stack_a);
 	}
-	
+	check_stack(&stack_a);
 	if(!is_sorted(&stack_a))
 	{
 		return (0);
 	}
-	pb(&stack_a, &stack_b);
-	pb(&stack_a, &stack_b);
-	pb(&stack_a, &stack_b);
-	pb(&stack_a, &stack_b);
-	rra(&stack_a);
-	rrb(&stack_b);
+	
+	// pb(&stack_a, &stack_b);
+	// pb(&stack_a, &stack_b);
+	// pb(&stack_a, &stack_b);
+	// pb(&stack_a, &stack_b);
+	// rra(&stack_a);
+	// rrb(&stack_b);
 	printf("stack A :\n");
 	print_stack(&stack_a);
-	printf("stack B :\n");
-	print_stack(&stack_b);
+	// printf("stack B :\n");
+	// print_stack(&stack_b);
 	return (0);
 }
 
