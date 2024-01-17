@@ -101,12 +101,12 @@ int is_double(t_stack *stack)
 	stack->selected = stack->top;
 	while(stack->selected->next)
 	{
-		tmp = stack->selected->next;
+		tmp = stack->selected;
 		while(tmp->next)
 		{
+			tmp = tmp->next;
 			if(tmp->content == stack->selected->content)
 				return(1);
-			tmp = tmp->next;
 		}
 		stack->selected = stack->selected->next;
 	}
@@ -143,6 +143,12 @@ void get_index(t_stack *stack)
 	}
 }
 
+void select_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	if(ft_lstsize(stack_a) > 5)
+			
+}
+
 int	main(int argc, char *argv[])
 {	
 	t_stack	stack_a;
@@ -168,7 +174,7 @@ int	main(int argc, char *argv[])
 	{
 		return (0);
 	}
-	
+	select_sort(&stack_a, &stack_b);
 	// pb(&stack_a, &stack_b);
 	// pb(&stack_a, &stack_b);
 	// pb(&stack_a, &stack_b);
