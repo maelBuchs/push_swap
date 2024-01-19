@@ -143,9 +143,63 @@ void get_index(t_stack *stack)
 	}
 }
 
+int set_octet(t_stack *stack)
+{
+	int	octet;
+	int	i;
+	int	temp;
+
+	octet = 0;
+	i = 0;
+	stack->selected = stack->top;
+	temp = stack->selected->content;
+	while(stack->selected->next)
+	{
+		if(stack->selected->content > temp)
+			temp = stack->selected->content;
+		stack->selected = stack->selected->next;
+	}
+	while(temp > 0)
+	{
+		temp = temp / 2;
+		octet++;
+	}
+	return (octet);
+}
+
+void radix_sort(t_stack *stack_a, t_stack *stack_b)
+{
+	int	octet;
+	int	i;
+
+	octet = set_octet(stack_a);
+	i = 0;
+	while(i < octet)
+	{
+		stack_a->selected = stack_a->top;
+		while(stack_a->selected->next && ft_lstsize(stack_a->top) > 0)
+		{
+			if(stack_a->selected->content >> i & 1)
+			{
+				stack_a->selected = stack_a->selected->next;
+				pb(stack_a, stack_b);
+			}
+			else
+			{
+				stack_a->selected = stack_a->selected->next;
+				ra(stack_a);
+			}
+		}
+		while(ft_lstsize(stack_b->top) > 0)
+			pa(stack_a, stack_b);
+		i++;
+	}
+}
+
 void select_sort(t_stack *stack_a, t_stack *stack_b)
 {
-	if(ft_lstsize(stack_a) > 5)
+	// if(ft_lstsize(stack_a->top) > 500)
+	radix_sort(stack_a, stack_b);
 			
 }
 
@@ -174,17 +228,15 @@ int	main(int argc, char *argv[])
 	{
 		return (0);
 	}
+	printf("before sort :\n");
+	
+	print_stack(&stack_a);
+	
 	select_sort(&stack_a, &stack_b);
 	// pb(&stack_a, &stack_b);
-	// pb(&stack_a, &stack_b);
-	// pb(&stack_a, &stack_b);
-	// pb(&stack_a, &stack_b);
-	// rra(&stack_a);
-	// rrb(&stack_b);
-	printf("stack A :\n");
+	// ra(&stack_a);
+	printf("after sort :\n");
 	print_stack(&stack_a);
-	// printf("stack B :\n");
-	// print_stack(&stack_b);
 	return (0);
 }
 
