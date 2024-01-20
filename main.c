@@ -172,15 +172,16 @@ void radix_sort(t_stack *stack_a, t_stack *stack_b)
 {
 	int	octet;
 	int size = ft_lstsize(stack_a->top);
+	int i = 0;
+	int j = 0;
 
 	octet = set_octet(stack_a);
 	printf("octet = %d\n", octet);
 	while(i < octet)
 	{
-		stack_a->selected = stack_a->top;
 		while(j < size)
 		{
-			if(stack_a->selected->content >> i & 1)
+			if(stack_a->top->content >> i & 1)
 				pb(stack_a, stack_b);
 			else
 				ra(stack_a);
