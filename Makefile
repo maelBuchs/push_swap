@@ -6,7 +6,12 @@ CFLAGS = -g
 RM = rm -rf
 HEAD = push_swap.h
 SRCS = 	main.c\
-		instructions.c\
+		srcs/instructions/push.c\
+		srcs/instructions/reverse.c\
+		srcs/instructions/rotate.c\
+		srcs/instructions/swap.c\
+		srcs/radix.c\
+		# srcs/instructions/
 
 
 OBJS = $(SRCS:.c=.o)

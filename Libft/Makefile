@@ -48,10 +48,8 @@ LIB = ft_strlen.c\
 	ft_putstr_fd.c\
 	ft_putendl_fd.c\
 	ft_putnbr_fd.c\
-
-ADDITIONAL = get_next_line.c\
-
-BONUS =	ft_lstadd_back.c\
+	get_next_line.c\
+	ft_lstadd_back.c\
 	ft_lstadd_front.c\
 	ft_lstlast.c\
 	ft_lstnew.c\
