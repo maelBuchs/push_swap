@@ -31,14 +31,14 @@ void	rra(t_stack *stack)
 /* a[last] -> a[0] || a[0] -> a[1] */
 {	
 	reverse_rotate(stack);
-	ft_putstr_fd("ra\n", 1);
+	ft_putstr_fd("rra\n", 1);
 }
 
 void	rrb(t_stack *stack)
 /* b[last] -> b[0] || b[0] -> b[1] */
 {
 	reverse_rotate(stack);
-	ft_putstr_fd("rb\n", 1);
+	ft_putstr_fd("rrb\n", 1);
 }
 
 void	rrr(t_stack *stack_a, t_stack *stack_b)
@@ -46,5 +46,5 @@ void	rrr(t_stack *stack_a, t_stack *stack_b)
 {
 	reverse_rotate(stack_a);
 	reverse_rotate(stack_b);
-	ft_putstr_fd("rr\n", 1);
+	ft_putstr_fd("rrr\n", 1);
 }

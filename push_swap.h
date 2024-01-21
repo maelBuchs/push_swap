@@ -52,11 +52,15 @@ void	remove_node(t_stack *stack, t_list *node);
 int		delnode(t_stack *stack, t_list *node);
 int		is_sorted(t_stack *stack);
 void select_sort(t_stack *stack_a, t_stack *stack_b);
-void get_index(t_stack *stack);
+int get_index(t_stack *stack, int value);
 int check_stack(t_stack *stack);
 int is_double(t_stack *stack);
 void radix_sort(t_stack *stack_a, t_stack *stack_b);
 int set_max_bits(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
+t_stack	*copy_stack(t_stack *stack);
+int is_namespace(char c);
+void	free_stack(t_stack *stack);
+long	atol(const char *str);
 
 #endif

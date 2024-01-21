@@ -33,12 +33,7 @@ void	print_stack(t_stack *stack)
 	}
 }
 
-void	print_error(int error)
-{
-	if (error == 0)
-		ft_putstr_fd("Error\nwrong input\n", 1);
-	exit (0);
-}
+
 
 void	tab_to_stack(char **tab, t_stack *stack)
 {
@@ -122,34 +117,150 @@ int check_stack(t_stack *stack)
 	}
 }
 
-void get_index(t_stack *stack)
+int get_index(t_stack *stack, int value)
 {
-	int		i;
-	t_list	*temp;
+	int	i;
+	int	returned;
 
 	i = 0;
+	returned = 1;
+	stack->selected = stack->top;
 	while(i < ft_lstsize(stack->top))
 	{
-		temp = stack->top;
+		if (stack->selected->content < value)
+			returned++;
 		stack->selected = stack->selected->next;
-		while (temp)
-		{
-			if(temp->content > stack->selected->content)
-				temp = stack->selected;
-			stack->selected = stack->selected->next;
-
-		}
 		i++;
 	}
+	return (returned);
+}
+
+int	index_values(t_stack *stack)
+{
+	int i;
+	t_stack *copy;
+
+	i = 0;
+	copy = copy_stack(stack);
+	stack->selected = stack->top;
+	while (i < ft_lstsize(stack->top))
+	{
+		stack->selected->content = get_index(copy, stack->selected->content);
+		// printf("index = %d\n", stack->selected->content);
+		stack->selected = stack->selected->next;
+		i++;
+	}
+	free_stack(copy);
+}
+
+void sort_3(t_stack *stack)
+{
+	stack->selected = stack->top;
+	if(stack->selected->content == 3 && stack->selected->next->content == 2)
+	{
+		ra(stack);
+		sa(stack);
+	}
+	else if(stack->selected->content == 2 && stack->selected->next->content == 3) // OK
+		rra(stack);
+	else if(stack->selected->content == 2 && stack->selected->next->content == 1) // OK
+		sa(stack);
+	else if(stack->selected->content == 1 && stack->selected->next->content == 3)
+	{
+		rra(stack);
+		sa(stack);
+	}
+	else if(stack->selected->content == 3 && stack->selected->next->content == 1)
+		ra(stack);
+}
+
+void sort_5(t_stack *stack_a, t_stack *stack_b)
+{
+	int i;
+	int j;
+	int min;
+	int max;
+
+	i = 0;
+	j = 0;
+	min = 0;
+	max = 0;
+	stack_a->selected = stack_a->top;
+	while(i < ft_lstsize(stack_a->top))
+	{
+		if(stack_a->selected->content < stack_a->top->content)
+			min = stack_a->selected->content;
+		if(stack_a->selected->content > stack_a->top->content)
+			max = stack_a->selected->content;
+		stack_a->selected = stack_a->selected->next;
+		i++;
+	}
+	stack_a->selected = stack_a->top;
+	while(j < ft_lstsize(stack_a->top))
+	{
+		if(stack_a->selected->content != min && stack_a->selected->content != max)
+			pb(stack_a, stack_b);
+		stack_a->selected = stack_a->selected->next;
+		j++;
+	}
+	sort_3(stack_a);
+	pa(stack_a, stack_b);
+	pa(stack_a, stack_b);
 }
 
 
 void select_sort(t_stack *stack_a, t_stack *stack_b)
 {
-	// if(ft_lstsize(stack_a->top) > 500)
-	radix_sort(stack_a, stack_b);
+	if (ft_lstsize(stack_a->top)== 2)
+	{
+		if(stack_a->top->content > stack_a->top->next->content)
+			sa(stack_a);
+		return ;
+	}
+	else if (ft_lstsize(stack_a->top) == 3)
+	{
+		sort_3(stack_a);
+		return ;
+	}
+	else if (ft_lstsize(stack_a->top) == 5)
+	{
+		sort_5(stack_a, stack_b);
+		return ;
+	}
+	else
+		radix_sort(stack_a, stack_b);
 			
 }
+
+void	check_input(char **str)
+{
+	int	i;
+	int	j;
+	int nb;
+
+	i = 0;
+	while (str[i])
+	{
+		if(atol(str[i]) > 2147483647 || atol(str[i]) < -2147483648)
+			print_error(0);
+		j = 0;
+		nb = 0;
+		while (str[i][j])
+		{
+			if (ft_isdigit(str[i][j]))
+				nb++;
+			if (!ft_isdigit(str[i][j]) && !is_namespace(str[i][j])
+				&& !((str[i][j] != '-' || str[i][j] != '+') && nb == 0))
+				print_error(0);
+			j++;
+		}
+		if(nb == 0)
+			print_error(0);
+		i++;
+	}
+}
+
+
 
 int	main(int argc, char *argv[])
 {	
@@ -164,27 +275,23 @@ int	main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		tab = ft_split(argv[1], ' ');
+		check_input(tab);
 		tab_to_stack(tab, &stack_a);
 	}
 	if (argc > 2)
 	{
 		tab = &argv[1];
+		check_input(tab);
 		tab_to_stack(tab, &stack_a);
 	}
 	check_stack(&stack_a);
 	if(!is_sorted(&stack_a))
-	{
 		return (0);
-	}
-	// printf("before sort :\n");
-	
-	print_stack(&stack_a);
-	
-	select_sort(&stack_a, &stack_b);
-	// // pb(&stack_a, &stack_b);
-	// // ra(&stack_a);
-	// printf("after sort :\n");
+	index_values(&stack_a);
 	// print_stack(&stack_a);
+	select_sort(&stack_a, &stack_b);
+	free_stack(&stack_a);
+
 	return (0);
 }
 

@@ -49,9 +49,9 @@ void radix_sort(t_stack *stack_a, t_stack *stack_b)
 		while (j++ < size)
 		{
 			if (stack_a->top->content >> i & 1)
-				ra(stack_a);
-			else
 				pb(stack_a, stack_b);
+			else
+				ra(stack_a);
 		}
 		while (ft_lstsize(stack_b->top) != 0)
 			pa(stack_a, stack_b);

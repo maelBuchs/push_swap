@@ -11,6 +11,7 @@ SRCS = 	main.c\
 		srcs/instructions/rotate.c\
 		srcs/instructions/swap.c\
 		srcs/radix.c\
+		srcs/push_swap_utils.c\
 		# srcs/instructions/
 
 
