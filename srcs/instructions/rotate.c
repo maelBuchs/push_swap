@@ -14,7 +14,7 @@
 
 void	rotate(t_stack *stack)
 {
-	int content;
+	int	content;
 
 	content = delnode(stack, stack->top);
 	ft_lstadd_back(&stack->top, ft_lstnew(content));

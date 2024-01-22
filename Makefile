@@ -12,6 +12,8 @@ SRCS = 	main.c\
 		srcs/instructions/swap.c\
 		srcs/radix.c\
 		srcs/push_swap_utils.c\
+		srcs/manage_stack.c\
+		srcs/check_stack.c\
 		# srcs/instructions/
 
 

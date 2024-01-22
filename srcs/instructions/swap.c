@@ -14,13 +14,15 @@
 
 void	swap(t_stack *stack)
 {
-	int temp;
+	int	temp;
+
 	if (!stack->top || !stack->top->next)
 		return ;
 	temp = stack->top->content;
 	stack->top->content = stack->top->next->content;
 	stack->top->next->content = temp;
 }
+
 void	sa(t_stack *stack)
 /* switch a[0] et a[1] */
 {
@@ -42,6 +44,3 @@ void	ss(t_stack *stack_a, t_stack *stack_b)
 	swap(stack_b);
 	ft_putstr_fd("ss\n", 1);
 }
-
-
-

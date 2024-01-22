@@ -14,11 +14,12 @@
 
 void	reverse_rotate(t_stack *stack)
 {
-	int i = 0;
-	int content;
+	int	i;
+	int	content;
 
+	i = 0;
 	stack->selected = stack->top;
-	while(i < ft_lstsize(stack->top) - 1)
+	while (i < ft_lstsize(stack->top) - 1)
 	{
 		stack->selected = stack->selected->next;
 		i++;
@@ -29,7 +30,7 @@ void	reverse_rotate(t_stack *stack)
 
 void	rra(t_stack *stack)
 /* a[last] -> a[0] || a[0] -> a[1] */
-{	
+{
 	reverse_rotate(stack);
 	ft_putstr_fd("rra\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: mbuchs <mael@buchs.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:32:38 by mbuchs            #+#    #+#             */
-/*   Updated: 2024/01/22 11:11:40 by mbuchs           ###   ########.fr       */
+/*   Updated: 2024/01/22 12:48:26 by mbuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_stack	*copy_stack(t_stack *stack)
 	copy = malloc(sizeof(t_stack));
 	copy->top = NULL;
 	tmp = stack->top;
-	while(tmp)
+	while (tmp)
 	{
 		ft_lstadd_back(&copy->top, ft_lstnew(tmp->content));
 		tmp = tmp->next;
@@ -28,26 +28,26 @@ t_stack	*copy_stack(t_stack *stack)
 	return (copy);
 }
 
-int is_namespace(char c)
+int	is_namespace(char c)
 {
-	if(c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
+	if (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r')
 		return (1);
 	return (0);
 }
 
 void	free_stack(t_stack *stack, int mode)
 {
-	while(stack->top)
+	while (stack->top)
 		delnode(stack, stack->top);
 	if (mode)
 		free(stack);
 }
 
-
 long	atol(const char *str)
 {
-	int	i;
-	int	sign;
+	int		i;
+	int		sign;
 	long	sum;
 
 	i = 0;

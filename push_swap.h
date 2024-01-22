@@ -13,7 +13,6 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include "Libft/libft.h"
@@ -51,18 +50,25 @@ void	init_stack(t_stack *stack);
 void	remove_node(t_stack *stack, t_list *node);
 int		delnode(t_stack *stack, t_list *node);
 int		is_sorted(t_stack *stack);
-void select_sort(t_stack *stack_a, t_stack *stack_b);
-int get_index(t_stack *stack, int value);
-int check_stack(t_stack *stack);
-int is_double(t_stack *stack);
-void radix_sort(t_stack *stack_a, t_stack *stack_b);
-int set_max_bits(t_stack *stack);
+void	select_sort(t_stack *stack_a, t_stack *stack_b);
+int		get_index(t_stack *stack, int value);
+int		check_stack(t_stack *stack);
+int		is_double(t_stack *stack);
+void	radix_sort(t_stack *stack_a, t_stack *stack_b);
+int 	set_max_bits(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
 t_stack	*copy_stack(t_stack *stack);
-int is_namespace(char c);
+int 	is_namespace(char c);
 void	free_stack(t_stack *stack, int mode);
 long	atol(const char *str);
-void free_tab(char **tab);
-void parse_stack(char **argv, t_stack *stack_a);
+void 	free_tab(char **tab);
+void 	parse_stack(char **argv, t_stack *stack_a);
+void	check_int(char **str, int i, int mode);
+void	check_int(char **str, int i, int mode);
+void	error_parse(int mode, char **str);
+void	check_input(char **str, int mode);
+int		index_values(t_stack *stack);
+void	sort_3(t_stack *stack);
+void	sort_5(t_stack *stack_a, t_stack *stack_b);
 
 #endif
