@@ -176,34 +176,24 @@ void sort_3(t_stack *stack)
 
 void sort_5(t_stack *stack_a, t_stack *stack_b)
 {
-	int i;
-	int j;
-	int min;
-	int max;
-
-	i = 0;
-	j = 0;
-	min = 0;
-	max = 0;
-	stack_a->selected = stack_a->top;
-	while(i < ft_lstsize(stack_a->top))
+	while (ft_lstsize(stack_b->top) <= 1)
 	{
-		if(stack_a->selected->content < stack_a->top->content)
-			min = stack_a->selected->content;
-		if(stack_a->selected->content > stack_a->top->content)
-			max = stack_a->selected->content;
-		stack_a->selected = stack_a->selected->next;
-		i++;
-	}
-	stack_a->selected = stack_a->top;
-	while(j < ft_lstsize(stack_a->top))
-	{
-		if(stack_a->selected->content != min && stack_a->selected->content != max)
+		if (stack_a->top->content == 1 || stack_a->top->content == 2)
 			pb(stack_a, stack_b);
-		stack_a->selected = stack_a->selected->next;
-		j++;
+		else
+			ra(stack_a);
 	}
-	sort_3(stack_a);
+	if (stack_b->top->content == 1)
+		sb(stack_b);
+	if (stack_a->top->next->next->content != 5)
+	{
+		if (stack_a->top->content == 5)
+			ra(stack_a);
+		else
+			rra(stack_a);
+	}
+	if (stack_a->top->content > stack_a->top->next->content)
+		sa(stack_a);
 	pa(stack_a, stack_b);
 	pa(stack_a, stack_b);
 }
