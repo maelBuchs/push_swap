@@ -42,7 +42,7 @@ void	rrr(t_stack *stack_a, t_stack *stack_b);
 /* Fonctions */
 void	swap(t_stack *stack);
 void	rotate(t_stack *stack);
-void	tab_to_stack(char **tab, t_stack *stack);
+void	tab_to_stack(char **tab, t_stack *stack, int mode);
 void	print_error(int error);
 void	print_stack(t_stack *stack);
 void	add_top(t_stack *stack, long long value);
@@ -60,7 +60,9 @@ int set_max_bits(t_stack *stack);
 void	reverse_rotate(t_stack *stack);
 t_stack	*copy_stack(t_stack *stack);
 int is_namespace(char c);
-void	free_stack(t_stack *stack);
+void	free_stack(t_stack *stack, int mode);
 long	atol(const char *str);
+void free_tab(char **tab);
+void parse_stack(char **argv, t_stack *stack_a);
 
 #endif

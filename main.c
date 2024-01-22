@@ -35,7 +35,7 @@ void	print_stack(t_stack *stack)
 
 
 
-void	tab_to_stack(char **tab, t_stack *stack)
+void	tab_to_stack(char **tab, t_stack *stack, int mode)
 {
 	int	i;
 	int	content;
@@ -43,8 +43,6 @@ void	tab_to_stack(char **tab, t_stack *stack)
 	i = 0;
 	while (tab[i])
 	{
-		if (ft_atoi(tab[i]) == 0 && tab[i][0] != '0')
-			print_error(0);
 		content = ft_atoi(tab[i]);
 		ft_lstadd_back(&stack->top, ft_lstnew(content));
 		i++;
@@ -108,15 +106,6 @@ int is_double(t_stack *stack)
 	return (0);
 }
 
-int check_stack(t_stack *stack)
-{
-	if(is_double(stack))
-	{
-		ft_putstr_fd("Error\n", 2);
-		exit (0);
-	}
-}
-
 int get_index(t_stack *stack, int value)
 {
 	int	i;
@@ -146,11 +135,12 @@ int	index_values(t_stack *stack)
 	while (i < ft_lstsize(stack->top))
 	{
 		stack->selected->content = get_index(copy, stack->selected->content);
-		// printf("index = %d\n", stack->selected->content);
+		// printf("index = %ld\n", stack->selected->content);
 		stack->selected = stack->selected->next;
 		i++;
 	}
-	free_stack(copy);
+	printf("%ld\n", sizeof(copy));
+	free_stack(copy, 1);
 }
 
 void sort_3(t_stack *stack)
@@ -222,7 +212,7 @@ void select_sort(t_stack *stack_a, t_stack *stack_b)
 			
 }
 
-void	check_input(char **str)
+void	check_input(char **str, int mode)
 {
 	int	i;
 	int	j;
@@ -232,7 +222,11 @@ void	check_input(char **str)
 	while (str[i])
 	{
 		if(atol(str[i]) > 2147483647 || atol(str[i]) < -2147483648)
+		{
+			if(mode)
+				free_tab(str);
 			print_error(0);
+		}
 		j = 0;
 		nb = 0;
 		while (str[i][j])
@@ -241,16 +235,35 @@ void	check_input(char **str)
 				nb++;
 			if (!ft_isdigit(str[i][j]) && !is_namespace(str[i][j])
 				&& !((str[i][j] != '-' || str[i][j] != '+') && nb == 0))
-				print_error(0);
+				{
+					if(mode)
+						free_tab(str);
+					print_error(0);
+				}
 			j++;
 		}
 		if(nb == 0)
+		{
+			if(mode)
+				free_tab(str);
 			print_error(0);
+		}
 		i++;
 	}
 }
 
+void free_tab(char **tab)
+{
+	int i;
 
+	i = 0;
+	while(tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}	
+	free(tab);
+}
 
 int	main(int argc, char *argv[])
 {	
@@ -264,23 +277,45 @@ int	main(int argc, char *argv[])
 	init_stack(&stack_b);
 	if (argc == 2)
 	{
-		tab = ft_split(argv[1], ' ');
-		check_input(tab);
-		tab_to_stack(tab, &stack_a);
+		int i = 0;
+		int is_solo = 0;
+		while (argv[1][i])
+		{
+			if(argv[1][i] == ' ')
+				is_solo++;
+			i++;
+		}
+		if (is_solo)
+		{
+			tab = ft_split(argv[1], ' ');
+			check_input(tab, 1);
+			tab_to_stack(tab, &stack_a, 1);
+			i = 0;
+			free_tab(tab);
+		}
+		else
+			return 0;
 	}
 	if (argc > 2)
 	{
 		tab = &argv[1];
-		check_input(tab);
-		tab_to_stack(tab, &stack_a);
+		check_input(tab, 0);
+		tab_to_stack(tab, &stack_a, 0);
 	}
-	check_stack(&stack_a);
+	if(is_double(&stack_a))
+	{
+		free_stack(&stack_a, 0);
+		print_error(0);
+	}
 	if(!is_sorted(&stack_a))
+	{
+		free_stack(&stack_a, 0);
 		return (0);
+	}
 	index_values(&stack_a);
 	// print_stack(&stack_a);
 	select_sort(&stack_a, &stack_b);
-	free_stack(&stack_a);
+	free_stack(&stack_a, 0);
 
 	return (0);
 }

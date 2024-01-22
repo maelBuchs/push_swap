@@ -6,7 +6,7 @@
 /*   By: mbuchs <mael@buchs.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 16:32:38 by mbuchs            #+#    #+#             */
-/*   Updated: 2024/01/21 16:33:43 by mbuchs           ###   ########.fr       */
+/*   Updated: 2024/01/22 11:11:40 by mbuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,12 @@ int is_namespace(char c)
 	return (0);
 }
 
-void	free_stack(t_stack *stack)
+void	free_stack(t_stack *stack, int mode)
 {
-	t_list	*tmp;
-
 	while(stack->top)
-	{
-		tmp = stack->top;
-		stack->top = stack->top->next;
-		free(tmp);
-	}
+		delnode(stack, stack->top);
+	if (mode)
+		free(stack);
 }
 
 
